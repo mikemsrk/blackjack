@@ -6,8 +6,21 @@ class window.AppView extends Backbone.View
   '
 
   events:
-    'click .hit-button': -> @model.get('playerHand').hit()
-    'click .stand-button': -> @model.get('playerHand').stand()
+    'click .hit-button': 'hit'
+    'click .stand-button': 'stand'
+
+  hit: ->
+    @model.get('playerHand').hit()
+    @model.set('playerScore',@model.get('playerHand').scores()[0])
+    @model.set('dealerScore',@model.get('dealerHand').scores()[0])
+    @model.check()
+
+  stand: ->
+    @model.get('playerHand').stand() # doesn't do anything.
+    @model.get('dealerHand').flip()
+    @model.set('playerScore',@model.get('playerHand').scores()[0])
+    @model.set('dealerScore',@model.get('dealerHand').scores()[0])
+    @model.standCheck()
 
   initialize: ->
     @render()
