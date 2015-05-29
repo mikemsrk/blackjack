@@ -17,6 +17,9 @@ class window.App extends Backbone.Model
     context.get('playerHand').reset()
     context.get('dealerHand').reset()
     context.set('deck', deck = new Deck())
+    context.get('playerHand').deck = deck
+    context.get('dealerHand').deck = deck
+
     context.get('playerHand').hit()
     context.get('playerHand').hit()
     context.get('dealerHand').hit()
