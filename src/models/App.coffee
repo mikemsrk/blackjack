@@ -6,23 +6,17 @@ class window.App extends Backbone.Model
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
 
-  defaults:
-    playerScore: 0
-    dealerScore: 0
-
   lose: -> alert('You lose fatboy')
   win: -> alert('You win fatboy')
 
 
   dealerTurn: ->
     # check his cards
-    ds = @get('dealerHand').scores()[0]
-    @set('dealerScore',ds)
+    ds = @get('dealerHand').scores()
     # while ds < 16
-    while(ds < 16)
+    while(ds[0] < 16)
       @get('dealerHand').hit()
-      ds = @get('dealerHand').scores()[0]
-      @set('dealerScore',ds)
+      ds = @get('dealerHand').scores()
 
 
   newGame: ->
@@ -39,10 +33,20 @@ class window.App extends Backbone.Model
     context.get('dealerHand').at(0).flip()
     context.get('dealerHand').hit()
 
+    @bjcheck()
+
+  bjcheck: ->
+    ps = @get('playerHand').scores()[0]
+    ps2 = @get('playerHand').scores()[1]
+    ds = @get('dealerHand').scores()[0]
+    if ps2 == 21 and ds != 21
+      @win()
+      @newGame()
+
 
   check: ->
-    ps = @get('playerScore')
-    ds = @get('dealerScore')
+    ps = @get('playerHand').scores()[0]
+    ds = @get('dealerHand').scores()[0]
 
     if ps == 21 and ds == 21
       @lose()
@@ -62,8 +66,8 @@ class window.App extends Backbone.Model
 
   standCheck: ->
     @dealerTurn()
-    ps = @get('playerScore')
-    ds = @get('dealerScore')
+    ps = @get('playerScore')[0]
+    ds = @get('dealerScore')[0]
 
     if ps == ds
       @lose()

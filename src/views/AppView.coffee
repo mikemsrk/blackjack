@@ -11,15 +11,15 @@ class window.AppView extends Backbone.View
 
   hit: ->
     @model.get('playerHand').hit()
-    @model.set('playerScore',@model.get('playerHand').scores()[0])
-    @model.set('dealerScore',@model.get('dealerHand').scores()[0])
+    @model.set('playerScore',@model.get('playerHand').scores())
+    @model.set('dealerScore',@model.get('dealerHand').scores())
     @model.check()
 
   stand: ->
     @model.get('playerHand').stand() # doesn't do anything.
     @model.get('dealerHand').flip()
-    @model.set('playerScore',@model.get('playerHand').scores()[0])
-    @model.set('dealerScore',@model.get('dealerHand').scores()[0])
+    @model.set('playerScore',@model.get('playerHand').scores())
+    @model.set('dealerScore',@model.get('dealerHand').scores())
     @model.standCheck()
 
   initialize: ->
