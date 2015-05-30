@@ -17,10 +17,12 @@ class window.App extends Backbone.Model
   dealerTurn: ->
     # check his cards
     ds = @get('dealerHand').scores()[0]
+    @set('dealerScore',ds)
     # while ds < 16
     while(ds < 16)
       @get('dealerHand').hit()
       ds = @get('dealerHand').scores()[0]
+      @set('dealerScore',ds)
 
 
   newGame: ->
@@ -65,6 +67,9 @@ class window.App extends Backbone.Model
 
     if ps == ds
       @lose()
+      @newGame()
+    else if ds > 21
+      @win()
       @newGame()
     else if ds > ps
       @lose()
