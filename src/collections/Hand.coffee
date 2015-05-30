@@ -4,7 +4,9 @@ class window.Hand extends Backbone.Collection
   initialize: (array, @deck, @isDealer) ->
 
   hit: ->
-    @add(@deck.pop())
+    card = @deck.pop()
+    @add(card)
+    return card
 
   stand: ->
 
@@ -18,7 +20,7 @@ class window.Hand extends Backbone.Collection
   , 0
 
   flip: ->
-    @at(0).set('revealed',!@at(0).get('revealed'))
+    @at(0).flip()
   ,
 
   scores: ->

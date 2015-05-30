@@ -66,8 +66,8 @@ class window.App extends Backbone.Model
 
   standCheck: ->
     @dealerTurn()
-    ps = @get('playerScore')[0]
-    ds = @get('dealerScore')[0]
+    ps = @get('playerHand').scores()[0]
+    ds = @get('dealerHand').scores()[0]
 
     if ps == ds
       @lose()
