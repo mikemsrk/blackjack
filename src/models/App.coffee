@@ -5,10 +5,24 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
+    @set 'chips', 500
+    @set 'currentBet', 0
 
-  lose: -> alert('You lose fatboy')
-  win: -> alert('You win fatboy')
+  lose: ->
+    alert('You lose fatboy')
+    @set('chips',@get('chips') - @get('currentBet'))
+    if(@get('chips') <= 0)
+      alert('Take more chimps, fatboy')
+      @set('chips',500)
 
+  win: ->
+    alert('You win fatboy')
+    @set('chips',parseInt(@get('chips')) + parseInt(@get('currentBet')))
+
+  bet: (amount) ->
+    amount = prompt("How many chimps, fatboy?") if (amount > @get('chips') || amount < 5)
+    @set('chips', (@get('chips') - amount))
+    @set('currentBet',amount)
 
   dealerTurn: ->
     # check his cards
