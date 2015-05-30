@@ -18,7 +18,7 @@ class window.Hand extends Backbone.Collection
   , 0
 
   flip: ->
-    @.at(0).set('revealed', true);
+    @at(0).set('revealed',!@at(0).get('revealed'))
   ,
 
   scores: ->

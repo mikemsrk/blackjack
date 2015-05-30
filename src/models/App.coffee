@@ -12,6 +12,17 @@ class window.App extends Backbone.Model
 
   lose: -> alert('You lose fatboy')
   win: -> alert('You win fatboy')
+
+
+  dealerTurn: ->
+    # check his cards
+    ds = @get('dealerHand').scores()[0]
+    # while ds < 16
+    while(ds < 16)
+      @get('dealerHand').hit()
+      ds = @get('dealerHand').scores()[0]
+
+
   newGame: ->
     context = this
     context.get('playerHand').reset()
@@ -25,6 +36,7 @@ class window.App extends Backbone.Model
     context.get('dealerHand').hit()
     context.get('dealerHand').at(0).flip()
     context.get('dealerHand').hit()
+
 
   check: ->
     ps = @get('playerScore')
@@ -47,6 +59,7 @@ class window.App extends Backbone.Model
       @newGame()
 
   standCheck: ->
+    @dealerTurn()
     ps = @get('playerScore')
     ds = @get('dealerScore')
 
@@ -59,4 +72,3 @@ class window.App extends Backbone.Model
     else if ps > ds
       @win()
       @newGame()
-
